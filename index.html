@@ -259,7 +259,7 @@ function calculate(){
  const input=document.getElementById("calc-expression").value.trim();
  const output=document.getElementById("calc-result");
  if(!input){output.textContent="Сначала введи пример.";return;}
- if(!/^[0-9+\-*/().\s]+$/.test(input)){output.textContent="Допустимы только числа, скобки и знаки + − * /.";return;}
+ if(!/^[0-9+\-*\/().\s]+$/.test(input)){output.textContent="Допустимы только числа, скобки и знаки + − * /.";return;}
  try{
   const result=Function('"use strict";return ('+input+')')();
   if(typeof result!=="number"||!Number.isFinite(result))throw Error();
