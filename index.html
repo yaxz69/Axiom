@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Boost 5-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans select-none antialiased">
+
+    <!-- Шапка -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 px-4 py-3 shadow-sm">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2" onclick="goHome()" class="cursor-pointer">
+                <div class="w-9 h-9 bg-emerald-500 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md shadow-emerald-200">
+                    <i class="fa-solid fa-square-root-variable"></i>
+                </div>
+                <div>
+                    <h1 class="text-base font-extrabold text-slate-900 leading-tight">Math Boost</h1>
+                    <p class="text-[10px] font-medium text-emerald-600 uppercase tracking-wider">5–11 классы</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full text-xs font-semibold text-amber-700">
+                <i class="fa-solid fa-fire text-amber-500"></i>
+                <span>1 день</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-10">
+
+        <!-- СЕКЦИЯ 1: Выбор класса -->
+        <div id="section-classes">
+            <div class="mb-4">
+                <h2 class="text-lg font-bold text-slate-900">Выбери класс</h2>
+                <p class="text-xs text-slate-500">Уроки расписаны по дням недели</p>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-3" id="class-grid">
+                <!-- Генерируется через JS -->
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 2: Выбор дня недели -->
+        <div id="section-days" class="hidden">
+            <button onclick="goHome()" class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg mb-4 hover:bg-emerald-100 transition">
+                <i class="fa-solid fa-arrow-left"></i> Все классы
+            </button>
+            <div class="mb-4">
+                <h2 id="selected-class-title" class="text-xl font-bold text-slate-900"></h2>
+                <p class="text-xs text-slate-500">Расписание уроков на неделю</p>
+            </div>
+
+            <div class="space-y-3" id="days-container">
+                <!-- Дни недели создаются JS -->
+            </div>
+        </div>
+
+        <!-- СЕКЦИЯ 3: Просмотр урока -->
+        <div id="section-lesson" class="hidden">
+            <button onclick="goBackToDays()" class="inline-flex items-center gap-2 text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-lg mb-4 hover:bg-emerald-100 transition">
+                <i class="fa-solid fa-arrow-left"></i> Назад к дням
+            </button>
+
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm mb-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span id="lesson-subject" class="text-[11px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider bg-emerald-100 text-emerald-700"></span>
+                    <span id="lesson-day-tag" class="text-xs font-medium text-slate-400"></span>
+                </div>
+                <h3 id="lesson-title" class="text-lg font-bold text-slate-900 mb-3"></h3>
+                <div id="lesson-theory" class="text-sm text-slate-600 space-y-3 leading-relaxed border-t border-slate-100 pt-3"></div>
+            </div>
+
+            <!-- Практика / Тест -->
+            <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+                <h4 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-emerald-500"></i> Проверь себя
+                </h4>
+                <p id="quiz-question" class="text-sm text-slate-700 font-medium mb-3"></p>
+                <div id="quiz-options" class="space-y-2"></div>
+                <div id="quiz-feedback" class="mt-3 p-3 rounded-xl text-xs font-medium hidden"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Нижняя панель навигации -->
+    <nav class="bg-white border-t border-slate-200 fixed bottom-0 left-0 right-0 py-2 shadow-lg z-40">
+        <div class="max-w-md mx-auto flex justify-around items-center text-xs font-medium text-slate-500">
+            <button onclick="goHome()" class="flex flex-col items-center gap-1 text-emerald-600 font-bold">
+                <i class="fa-solid fa-book-open text-base"></i> Уроки
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-slate-800 transition">
+                <i class="fa-solid fa-calculator text-base"></i> Решебник
+            </button>
+            <button class="flex flex-col items-center gap-1 hover:text-slate-800 transition">
+                <i class="fa-solid fa-trophy text-base"></i> Достижения
+            </button>
+        </div>
+    </nav>
+
+    <script>
+        // Данные уроков по классам и дням
+        const lessonsData = {
+            5: {
+                title: "5 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Математика", title: "Обыкновенные дроби", theory: "Дробь состоит из числителя (вверху) и знаменателя (внизу). Знаменатель показывает, на сколько частей разделили целое, а числитель — сколько таких частей взяли.", q: "Какая часть фигуры закрашена, если её разделили на 4 равные части и взяли 3?", opts: ["3/4", "1/4", "4/3", "2/4"], correct: 0 },
+                    { day: "Вторник", subject: "Математика", title: "Сложение дробей с одинаковыми знаменателями", theory: "Чтобы сложить дроби с одинаковыми знаменателями, складывают их числители, а знаменатель оставляют прежним: a/c + b/c = (a+b)/c.", q: "Чему равно 2/7 + 3/7?", opts: ["5/14", "5/7", "1/7", "6/7"], correct: 1 },
+                    { day: "Среда", subject: "Математика", title: "Десятичные дроби", theory: "Десятичные дроби — это дроби со знаменателями 10, 100, 1000 и т.д. Они записываются через запятую: 3/10 = 0,3.", q: "Запиши в виде десятичной дроби 5/100:", opts: ["0,5", "0,05", "5,0", "0,005"], correct: 1 },
+                    { day: "Четверг", subject: "Математика", title: "Периметр и площадь прямоугольника", theory: "Периметр (P) — сумма всех сторон: P = 2·(a + b). Площадь (S) — произведение длины на ширину: S = a · b.", q: "Найди площадь прямоугольника со сторонами 4 см и 6 см:", opts: ["20 см²", "24 см²", "10 см²", "12 см²"], correct: 1 },
+                    { day: "Пятница", subject: "Математика", title: "Проценты (Основы)", theory: "1 процент (1%) — это одна сотая часть числа (1/100 или 0,01). Чтобы найти 10% от числа, раздели его на 10.", q: "Чему равны 50% от числа 80?", opts: ["20", "40", "50", "10"], correct: 1 }
+                ]
+            },
+            6: {
+                title: "6 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Математика", title: "Отрицательные числа", theory: "Числа со знаком минус (-) находятся слева от нуля на координатной прямой. Чем дальше число влево от нуля, тем оно меньше (-10 < -2).", q: "Какое число меньше?", opts: ["-5", "-2", "0", "1"], correct: 0 },
+                    { day: "Вторник", subject: "Математика", title: "Модуль числа", theory: "Модуль числа — это расстояние от нуля до этого числа. Модуль не может быть отрицательным: |-7| = 7, |7| = 7.", q: "Чему равно |-15| + |5|?", opts: ["-10", "10", "20", "-20"], correct: 2 },
+                    { day: "Среда", subject: "Математика", title: "Пропорции", theory: "Пропорция — это равенство двух отношений (a/b = c/d). Основное свойство: произведение крайних членов равно произведению средних (a·d = b·c).", q: "Найди x в пропорции: x/4 = 6/8", opts: ["3", "2", "4", "5"], correct: 0 },
+                    { day: "Четверг", subject: "Математика", title: "Сложение чисел с разными знаками", theory: "Чтобы сложить числа с разными знаками, нужно из большего модуля вычесть меньший и поставить знак того числа, модуль которого больше (-8 + 5 = -3).", q: "Вычисли: -12 + 7", opts: ["-5", "5", "-19", "19"], correct: 0 },
+                    { day: "Пятница", subject: "Математика", title: "Координатная плоскость", theory: "Точка на плоскости задается двумя координатами: P(x, y). Первая ось (x) — горизонтальная (абсцисса), вторая (y) — вертикальная (ордината).", q: "В какаом порядке записываются координаты точки?", opts: ["(y, x)", "(x, y)", "не имеет значения", "(x, x)"], correct: 1 }
+                ]
+            },
+            7: {
+                title: "7 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Алгебра", title: "Свойства степеней", theory: "При умножении степеней с одинаковым основанием показатели складываются: aⁿ · aᵐ = aⁿ⁺ᵐ. При делении — вычитаются.", q: "Упрости выражение: x³ · x⁴", opts: ["x¹²", "x⁷", "x¹", "2x⁷"], correct: 1 },
+                    { day: "Вторник", subject: "Геометрия", title: "Смежные и вертикальные углы", theory: "Сумма смежных углов равна 180°. Вертикальные углы всегда равны между собой.", q: "Один из смежных углов равен 60°. Найди второй угол:", opts: ["60°", "120°", "90°", "30°"], correct: 1 },
+                    { day: "Среда", subject: "Алгебра", title: "Формулы сокращенного умножения", theory: "Квадрат суммы: (a + b)² = a² + 2ab + b². Разность квадратов: a² - b² = (a - b)(a + b).", q: "Раскрой скобки: (x + 3)²", opts: ["x² + 9", "x² + 3x + 9", "x² + 6x + 9", "x² + 6"], correct: 2 },
+                    { day: "Четверг", subject: "Геометрия", title: "Признаки равенства треугольников", theory: "1-й признак: по двум сторонам и углу между ними. 2-й признак: по стороне и двум прилежащим углам. 3-й признак: по трём сторонам.", q: "Сколько основных признаков равенства треугольников?", opts: ["2", "3", "4", "5"], correct: 1 },
+                    { day: "Пятница", subject: "Алгебра", title: "Линейные уравнения", theory: "Уравнение вида ax + b = 0. Чтобы решить, переносят слагаемые с неизвестным в одну сторону, а числа — в другую, меняя знаки.", q: "Реши уравнение: 2x - 6 = 0", opts: ["x = 3", "x = -3", "x = 6", "x = 0"], correct: 0 }
+                ]
+            },
+            8: {
+                title: "8 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Алгебра", title: "Квадратные корни", theory: "Арифм. квадратный корень √a — такое неотрицательное число, квадрат которого равен a. √(a²) = |a|.", q: "Вычисли: √64 - √16", opts: ["4", "8", "6", "2"], correct: 0 },
+                    { day: "Вторник", subject: "Геометрия", title: "Теорема Пифагора", theory: "В прямоугольном треугольнике квадрат гипотенузы равен сумме квадратов катетов: c² = a² + b².", q: "Найди гипотенузу, если катеты равны 3 см и 4 см:", opts: ["7 см", "5 см", "6 см", "25 см"], correct: 1 },
+                    { day: "Среда", subject: "Алгебра", title: "Квадратные уравнения и Дискриминант", theory: "ax² + bx + c = 0. Дискриминант D = b² - 4ac. Если D > 0 — два корня, D = 0 — один корень, D < 0 — корней нет.", q: "Чему равен D для уравнения x² - 4x + 3 = 0?", opts: ["4", "16", "8", "0"], correct: 0 },
+                    { day: "Четверг", subject: "Геометрия", title: "Площади параллелограмма и трапеции", theory: "Площадь параллелограмма: S = a · h. Площадь трапеции: S = ((a + b) / 2) · h.", q: "Площадь параллелограмма с основанием 8 см и высотой 5 см:", opts: ["20 см²", "40 см²", "13 см²", "30 см²"], correct: 1 },
+                    { day: "Пятница", subject: "Алгебра", title: "Теорема Виета", theory: "Для приведенного уравнения x² + px + q = 0: сумма корней x₁ + x₂ = -p, а произведение x₁ · x₂ = q.", q: "Укажи произведение корней уравнения x² - 7x + 12 = 0:", opts: ["7", "-7", "12", "-12"], correct: 2 }
+                ]
+            },
+            9: {
+                title: "9 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Алгебра", title: "Арифметическая прогрессия", theory: "Последовательность, где каждый член больше предыдущего на разность d: aₙ = a₁ + (n-1)d.", q: "Найди 5-й член прогрессии, где a₁ = 2, d = 3:", opts: ["14", "17", "11", "15"], correct: 0 },
+                    { day: "Вторник", subject: "Геометрия", title: "Тригонометрия (Sin, Cos, Tg)", theory: "Синус — отношение противолежащего катета к гипотенузе, косинус — прилежащего, тангенс — противолежащего к прилежащему.", q: "Чему равен sin(30°)?", opts: ["1", "1/2", "√3/2", "0"], correct: 1 },
+                    { day: "Среда", subject: "Алгебра", title: "Геометрическая прогрессия", theory: "Последовательность, где каждый член получается умножением на знаменатель q: bₙ = b₁ · qⁿ⁻¹.", q: "Найди b₃, если b₁ = 3, q = 2:", opts: ["6", "12", "18", "24"], correct: 1 },
+                    { day: "Четверг", subject: "Геометрия", title: "Длина окружности и площадь круга", theory: "Длина окружности C = 2πR. Площадь круга S = πR².", q: "Площадь круга с радиусом R = 3 см (π ≈ 3,14):", opts: ["9π см²", "6π см²", "3π см²", "12π см²"], correct: 0 },
+                    { day: "Пятница", subject: "Алгебра", title: "Неравенства и метод интервалов", theory: "Чтобы решить квадратное неравенство, находят корни уравнения, отмечают их на числовой прямой и определяют знаки на интервалах.", q: "Реши неравенство (x - 2)(x - 5) < 0:", opts: ["(2; 5)", "(-∞; 2)", "(5; +∞)", "(-2; -5)"], correct: 0 }
+                ]
+            },
+            10: {
+                title: "10 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Алгебра", title: "Радианная мера угла", theory: "180 градусов = π радиан. Для перевода градусов в радианы умножают на π/180.", q: "Сколько радиан в угле 90°?", opts: ["π/4", "π/2", "π", "2π"], correct: 1 },
+                    { day: "Вторник", subject: "Геометрия", title: "Стереометрия (Параллельность в пространстве)", theory: "Прямые в пространстве могут быть параллельными, пересекающимися или скрещивающимися (не лежат в одной плоскости).", q: "Прямые, которые не пересекаются и не лежат в одной плоскости:", opts: ["Параллельные", "Скрещивающиеся", "Совпадающие", "Перпендикулярные"], correct: 1 },
+                    { day: "Среда", subject: "Алгебра", title: "Тригонометрические формулы", theory: "Основное тригонометрическое тождество: sin²x + cos²x = 1.", q: "Чему равно 1 - sin²x?", opts: ["cos²x", "tg²x", "1", "0"], correct: 0 },
+                    { day: "Четверг", subject: "Геометрия", title: "Теорема о трех перпендикулярах", theory: "Прямая, проведенная в плоскости через основание наклонной перпендикулярно к ее проекции, перпендикулярна и самой наклонной.", q: "Сколько перпендикуляров фигурирует в теореме?", opts: ["2", "3", "1", "4"], correct: 1 },
+                    { day: "Пятница", subject: "Алгебра", title: "Показательная функция", theory: "Функция вида y = aˣ (а > 0, a ≠ 1). Если a > 1, функция возрастает, если 0 < a < 1 — убывает.", q: "Реши уравнение: 2ˣ = 16", opts: ["x = 3", "x = 4", "x = 8", "x = 2"], correct: 1 }
+                ]
+            },
+            11: {
+                title: "11 Класс",
+                days: [
+                    { day: "Понедельник", subject: "Алгебра", title: "Производная функции", theory: "Производная характеризует скорость изменения функции. Табличные производные: (xⁿ)' = n·xⁿ⁻¹, (C)' = 0.", q: "Чему равна производная функции f(x) = x³?", opts: ["3x²", "x²", "3x", "x⁴"], correct: 0 },
+                    { day: "Вторник", subject: "Геометрия", title: "Тела вращения (Цилиндр, Конус, Шар)", theory: "Объем цилиндра: V = πR²h. Объем конуса: V = (1/3)πR²h. Объем шара: V = (4/3)πR³.", q: "Формула объема цилиндра:", opts: ["πR²h", "(1/3)πR²h", "2πRh", "4/3 πR³"], correct: 0 },
+                    { day: "Среда", subject: "Алгебра", title: "Первообразная и Интеграл", theory: "Первообразная F(x) — функция, производная которой равна f(x). Интеграл используется для расчета площадей криволинейных фигур.", q: "Какая функция является первообразной для f(x) = 2x?", opts: ["x²", "2", "x³", "x² + C"], correct: 3 },
+                    { day: "Четверг", subject: "Геометрия", title: "Векторы в пространстве", theory: "Длина вектора a(x, y, z) вычисляется по формуле: |a| = √(x² + y² + z²). Скалярное произведение a·b = x₁x₂ + y₁y₂ + z₁z₂.", q: "Скалярное произведение перпендикулярных векторов равно:", opts: ["1", "0", "-1", "бесконечности"], correct: 1 },
+                    { day: "Пятница", subject: "Алгебра", title: "Логарифмические уравнения", theory: "Логарифм logₐb — показатель степени, в которую нужно возвести a, чтобы получить b. ОДЗ: a > 0, a ≠ 1, b > 0.", q: "Реши уравнение: log₂x = 3", opts: ["x = 6", "x = 8", "x = 9", "x = 5"], correct: 1 }
+                ]
+            }
+        };
+
+        let currentClass = null;
+        let currentLesson = null;
+
+        // Инициализация при загрузке
+        window.onload = function() {
+            renderClasses();
+        };
+
+        function renderClasses() {
+            const grid = document.getElementById('class-grid');
+            grid.innerHTML = '';
+            
+            for (let grade = 5; grade <= 11; grade++) {
+                const item = lessonsData[grade];
+                grid.innerHTML += `
+                    <button onclick="selectClass(${grade})" class="bg-white border border-slate-200 hover:border-emerald-400 p-4 rounded-2xl text-left transition shadow-sm hover:shadow-md active:scale-95 group">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 font-extrabold flex items-center justify-center text-sm mb-2 group-hover:bg-emerald-500 group-hover:text-white transition">
+                            ${grade}
+                        </div>
+                        <div class="font-bold text-slate-900 text-sm">${item.title}</div>
+                        <div class="text-[11px] text-slate-400 mt-0.5">5 уроков в неделю</div>
+                    </button>
+                `;
+            }
+        }
+
+        function selectClass(grade) {
+            currentClass = grade;
+            document.getElementById('section-classes').classList.add('hidden');
+            document.getElementById('section-days').classList.remove('hidden');
+            document.getElementById('selected-class-title').innerText = lessonsData[grade].title;
+
+            const container = document.getElementById('days-container');
+            container.innerHTML = '';
+
+            lessonsData[grade].days.forEach((item, index) => {
+                container.innerHTML += `
+                    <div onclick="openLesson(${index})" class="bg-white border border-slate-200 p-4 rounded-xl flex items-center justify-between cursor-pointer hover:border-emerald-300 transition shadow-sm active:scale-98">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-xs">
+                                ${item.day.slice(0, 2)}
+                            </div>
+                            <div>
+                                <div class="text-[10px] font-bold uppercase text-emerald-600 tracking-wider">${item.subject}</div>
+                                <div class="font-semibold text-slate-800 text-sm">${item.title}</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                    </div>
+                `;
+            });
+        }
+
+        function openLesson(index) {
+            const lesson = lessonsDa
