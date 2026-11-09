@@ -1,0 +1,169 @@
+let currentClass = null;
+let currentLesson = null;
+let currentIndex = 0;
+
+let completedLessons = JSON.parse(
+    localStorage.getItem('mathBoostProgress') || '[]'
+);
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderClasses();
+    updateProgress();
+});
+
+function saveProgress() {
+    localStorage.setItem(
+        'mathBoostProgress',
+        JSON.stringify(completedLessons)
+    );
+    updateProgress();
+}
+
+function updateProgress() {
+    const count = completedLessons.length;
+    const streak = document.querySelector('.streak');
+
+    if (streak) {
+        streak.textContent = `Прогресс: ${count}/35`;
+    }
+}
+
+function renderClasses() {
+    const grid = document.getElementById('class-grid');
+    grid.innerHTML = '';
+
+    for (let grade = 5; grade <= 11; grade++) {
+        grid.innerHTML += `
+            <button onclick="selectClass(${grade})"
+                class="class-card">
+                <div class="class-badge">${grade}</div>
+                <div class="class-name">${grade} класс</div>
+                <div class="class-info">5 уроков в неделю</div>
+            </button>
+        `;
+    }
+}
+
+function selectClass(grade) {
+    currentClass = grade;
+
+    document.getElementById('section-classes').classList.add('hidden');
+    document.getElementById('section-lesson').classList.add('hidden');
+    document.getElementById('section-days').classList.remove('hidden');
+
+    document.getElementById('selected-class-title').textContent =
+        lessonsData[grade].title;
+
+    const container = document.getElementById('days-container');
+    container.innerHTML = '';
+
+    lessonsData[grade].days.forEach((item, index) => {
+        const key = `${grade}-${index}`;
+        const done = completedLessons.includes(key);
+
+        container.innerHTML += `
+            <div onclick="openLesson(${index})" class="day-card">
+                <div>
+                    <div class="day-tag">${item.subject}</div>
+                    <div class="day-title">${item.title}</div>
+                </div>
+                <div class="day-name">${done ? '✓' : item.day.slice(0, 2)}</div>
+            </div>
+        `;
+    });
+}
+
+function openLesson(index) {
+    currentIndex = index;
+    currentLesson = lessonsData[currentClass].days[index];
+
+    document.getElementById('section-days').classList.add('hidden');
+    document.getElementById('section-lesson').classList.remove('hidden');
+
+    document.getElementById('lesson-subject').textContent =
+        currentLesson.subject;
+
+    document.getElementById('lesson-day-tag').textContent =
+        currentLesson.day;
+
+    document.getElementById('lesson-title').textContent =
+        currentLesson.title;
+
+    document.getElementById('lesson-theory').textContent =
+        currentLesson.theory;
+
+    document.getElementById('quiz-question').textContent =
+        currentLesson.q;
+
+    const optionsBox = document.getElementById('quiz-options');
+    optionsBox.innerHTML = '';
+
+    const feedback = document.getElementById('quiz-feedback');
+    feedback.className = 'feedback';
+    feedback.textContent = '';
+
+    currentLesson.opts.forEach((option, i) => {
+        optionsBox.innerHTML += `
+            <button onclick="checkAnswer(${i})" class="opt-btn">
+                ${option}
+            </button>
+        `;
+    });
+}
+
+function checkAnswer(chosenIndex) {
+    const feedback = document.getElementById('quiz-feedback');
+    const options = document.querySelectorAll('#quiz-options .opt-btn');
+
+    if (chosenIndex === currentLesson.correct) {
+        feedback.className = 'feedback correct';
+        feedback.textContent = 'Правильно! Отличная работа.';
+
+        const key = `${currentClass}-${currentIndex}`;
+
+        if (!completedLessons.includes(key)) {
+            completedLessons.push(key);
+            saveProgress();
+        }
+
+        options.forEach(button => button.disabled = true);
+
+        const nextButton = document.createElement('button');
+        nextButton.className = 'opt-btn';
+        nextButton.style.background = '#10b981';
+        nextButton.style.color = 'white';
+        nextButton.style.border = 'none';
+
+        nextButton.textContent =
+            currentIndex < 4 ? 'Следующий урок →' : 'К расписанию';
+
+        nextButton.onclick = () => {
+            if (currentIndex < 4) {
+                openLesson(currentIndex + 1);
+            } else {
+                goBackToDays();
+            }
+        };
+
+        document.getElementById('quiz-options').appendChild(nextButton);
+
+    } else {
+        feedback.className = 'feedback wrong';
+        feedback.textContent = 'Неправильно. Попробуй ещё раз!';
+    }
+}
+
+function goBackToDays() {
+    document.getElementById('section-lesson').classList.add('hidden');
+    document.getElementById('section-days').classList.remove('hidden');
+
+    selectClass(currentClass);
+}
+
+function goHome() {
+    document.getElementById('section-classes').classList.remove('hidden');
+    document.getElementById('section-days').classList.add('hidden');
+    document.getElementById('section-lesson').classList.add('hidden');
+
+    currentClass = null;
+}
