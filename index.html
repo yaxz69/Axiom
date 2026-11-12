@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10b981">
+<title>Math Boost 5–11</title>
+<style>
+:root{--g:#10b981;--gd:#047857;--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#64748b;--line:#e2e8f0;--soft:#ecfdf5;--okb:#ecfdf5;--okl:#a7f3d0;--okt:#065f46;--badb:#fef2f2;--badl:#fecaca;--badt:#991b1b;--chip:#f1f5f9;--gold:#f59e0b;color-scheme:light}
+[data-theme=dark]{--gd:#34d399;--bg:#0b1220;--card:#121c31;--ink:#e6edf7;--mut:#94a3b8;--line:#24314b;--soft:#0e2a24;--okb:#0c2b22;--okl:#14532d;--okt:#86efac;--badb:#33141a;--badl:#7f1d1d;--badt:#fca5a5;--chip:#1b2740;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+body{background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:88px}
+button,select,input{color:inherit;font-size:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));display:flex;align-items:center;justify-content:space-between;gap:8px}
+.logo{display:flex;align-items:center;gap:9px;border:0;background:none;text-align:left}
+.li{width:40px;height:40px;border-radius:12px;background:var(--g);color:#fff;display:grid;place-items:center;font-size:20px;font-weight:800}
+.logo h1{font-size:16px}.logo p{font-size:9px;color:var(--gd);font-weight:800;letter-spacing:1px}
+.hr{display:flex;align-items:center;gap:6px}
+.hb,.hr select{border:1px solid var(--line);border-radius:9px;padding:7px 8px;background:var(--card);font-weight:700;font-size:13px}
+.pill{font-size:12px;font-weight:700;color:#a16207;background:#fffbeb;border:1px solid #fde68a;padding:7px 9px;border-radius:20px;white-space:nowrap}
+[data-theme=dark] .pill{background:#2a2110;border-color:#5b4513;color:#fcd34d}
+main{width:min(100%,520px);margin:auto;padding:20px 16px}
+.h2{font-size:22px;font-weight:800;margin-bottom:4px}.sub{font-size:14px;color:var(--mut);margin-bottom:16px}
+.card,.panel{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.panel{padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cls{padding:15px;text-align:left}.cls:active,.day:active{transform:scale(.98)}
+.badge{width:34px;height:34px;border-radius:10px;background:var(--soft);color:var(--gd);display:grid;place-items:center;font-weight:800;margin-bottom:8px}
+.cn{font-weight:800;font-size:15px}.s2{font-size:11px;color:var(--mut);margin-top:3px}
+.pb{height:6px;border-radius:6px;background:var(--chip);margin-top:8px;overflow:hidden}.pb i{display:block;height:100%;background:var(--g);transition:width .3s}
+.back{border:0;background:var(--soft);color:var(--gd);padding:9px 13px;border-radius:9px;font-weight:700;margin-bottom:16px}
+.day{width:100%;padding:14px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;text-align:left}
+.tag{font-size:10px;text-transform:uppercase;font-weight:800;color:var(--gd)}.ttl{font-size:14px;font-weight:700;margin-top:3px}
+.mark{min-width:36px;height:36px;border-radius:10px;background:var(--chip);display:grid;place-items:center;color:var(--mut);font-size:12px;font-weight:800}.mark.done{background:var(--okl);color:var(--okt)}
+.lv{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:-2px 0 12px}
+.lvl{border:1px solid var(--line);background:var(--card);border-radius:12px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.lvl b{font-size:15px}.lvl i{font-style:normal;font-size:10px;color:var(--mut);letter-spacing:-1px}.lvl.done{border-color:var(--g)}.lvl.done i{color:var(--gold)}.lvl.lock{opacity:.5}
+.lh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.subj{background:var(--okl);color:var(--okt);padding:4px 8px;border-radius:6px;font-size:10px;font-weight:800;text-transform:uppercase}
+.dl{font-size:11px;color:var(--mut)}.lt{font-size:19px;margin-bottom:8px}
+.th{border-top:1px solid var(--line);padding-top:10px;font-size:14px;line-height:1.6;color:var(--mut)}
+.ex{margin-top:12px;padding:12px;border-radius:12px;background:var(--soft);font-size:14px;line-height:1.6}.ex b{color:var(--gd)}
+.qh{display:flex;justify-content:space-between;font-size:12px;color:var(--mut);font-weight:700;margin-bottom:6px}
+.qq{font-size:17px;font-weight:700;margin:14px 0 6px;line-height:1.5}
+.opt{display:block;width:100%;padding:13px;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;margin:8px 0;font-size:15px;font-weight:600}
+.opt:disabled{opacity:.7;cursor:default}.opt.ok{border-color:var(--g);background:var(--okb);opacity:1}.opt.no{border-color:#ef4444;background:var(--badb)}
+.fb{display:none;padding:11px;border-radius:10px;font-size:13px;font-weight:600;margin-top:10px}.fb.show{display:block}
+.fb.ok{background:var(--okb);color:var(--okt);border:1px solid var(--okl)}.fb.no{background:var(--badb);color:var(--badt);border:1px solid var(--badl)}
+.btn{width:100%;border:0;border-radius:11px;background:var(--g);color:#fff;padding:13px;font-size:14px;font-weight:800;margin-top:10px}
+.btn2{width:100%;border:1px solid var(--line);border-radius:11px;background:var(--card);padding:12px;font-weight:700;margin-top:8px}
+.res{text-align:center}.stars{font-size:44px;color:var(--gold);letter-spacing:4px;animation:pop .5s}.res h3{font-size:20px;margin:6px 0}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.inp{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;font-size:16px;margin:8px 0;background:var(--card)}
+.disp{font-size:22px;text-align:right}.prev{min-height:24px;text-align:right;color:var(--mut);font-size:16px;margin-bottom:8px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.keys button{padding:14px 0;border-radius:12px;border:1px solid var(--line);background:var(--card);font-size:18px;font-weight:700}
+.keys .op{background:var(--soft);color:var(--gd)}.keys .eq{background:var(--g);color:#fff;border-color:var(--g)}.keys .cl{background:var(--badb);color:var(--badt)}
+.hi{display:flex;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:14px;cursor:pointer}.hi b{color:var(--gd)}
+.lvc{display:flex;align-items:center;gap:14px}.big{font-size:42px}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}.stat strong{font-size:24px;display:block;color:var(--gd)}.stat span{font-size:12px;color:var(--mut)}
+.bg3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.bd{border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center;background:var(--card)}.bd .e{font-size:28px}.bd b{display:block;font-size:11px;margin-top:4px}.bd span{font-size:10px;color:var(--mut);display:block;margin-top:2px}
+.bd.off{opacity:.45;filter:grayscale(1)}.bd.on{border-color:var(--gold);background:linear-gradient(var(--card),var(--soft))}
+.empty{padding:14px;border:1px dashed var(--line);border-radius:14px;color:var(--mut);font-size:13px;line-height:1.5}
+.hide{display:none!important}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));z-index:10}
+.ni{border:0;background:none;color:var(--mut);font-size:11px;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:3px;min-width:75px}.ni span:first-child{font-size:20px}.ni.on{color:var(--gd)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#0f172a;color:#fff;padding:11px 16px;border-radius:12px;font-weight:700;font-size:14px;opacity:0;transition:.3s;z-index:20;pointer-events:none;max-width:90%}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+label{font-weight:700;font-size:14px}
+
+/* ===== Безопасные микроанимации интерфейса ===== */
+@keyframes softFade{from{opacity:.65}to{opacity:1}}
+@keyframes correctGlow{0%{filter:brightness(1)}45%{filter:brightness(1.12)}100%{filter:brightness(1)}}
+@keyframes wrongFlash{0%,100%{filter:none}50%{filter:brightness(.92)}}
+@keyframes logoGlow{0%,100%{box-shadow:0 0 0 0 #10b98100}50%{box-shadow:0 0 0 5px #10b98120}}
+section:not(.hide){animation:softFade .22s ease-out}
+.li{animation:logoGlow 3.5s ease-in-out infinite}
+.card,.panel,.stat,.bd,.opt,.btn,.btn2,.hb,.back{transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,filter .18s ease}
+.cls,.day,.bd.on{animation:softFade .25s ease-out}
+.opt.ok{animation:correctGlow .3s ease}
+.opt.no{animation:wrongFlash .25s ease}
+.fb.show{animation:softFade .2s ease-out}
+.pb i{transition:width .4s ease}
+#toast.show{animation:softFade .2s ease-out}
+@media(hover:hover){
+ .cls:hover,.day:hover,.stat:hover,.bd.on:hover{box-shadow:0 6px 18px #0f172a12}
+ .opt:not(:disabled):hover{border-color:var(--g)}
+ .btn:hover{filter:brightness(1.05)}
+ .btn2:hover,.hb:hover,.back:hover{border-color:var(--g)}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+
+/* ===== Анимации v2: отвечают на действия ===== */
+html{-webkit-tap-highlight-color:transparent}button{touch-action:manipulation}
+body{background:radial-gradient(800px 360px at 8% -8%,#10b98126,transparent 70%),radial-gradient(700px 320px at 100% 0,#f59e0b14,transparent 70%),var(--bg);background-attachment:fixed}
+@keyframes secIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes slideIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+@keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+@keyframes okPop{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes starPop{0%{transform:scale(0) rotate(-40deg);opacity:0}70%{transform:scale(1.3) rotate(8deg)}100%{transform:scale(1);opacity:1}}
+@keyframes navPop{0%{transform:translateY(5px) scale(.8)}60%{transform:translateY(-4px) scale(1.18)}100%{transform:none}}
+@keyframes conf{0%{transform:translate(0,0) scale(.4);opacity:1}100%{transform:translate(var(--x),calc(var(--y) + 340px)) rotate(var(--r)) scale(1.1);opacity:0}}
+section:not(.hide){animation:secIn .3s ease-out}
+.grid>*,.bg3>.bd{animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--n,0)*50ms)}
+.opt{animation:slideIn .35s cubic-bezier(.2,.8,.2,1) both}
+.opt:nth-child(2){animation-delay:.05s}.opt:nth-child(3){animation-delay:.1s}.opt:nth-child(4){animation-delay:.15s}
+.opt.ok{animation:okPop .45s ease}.opt.no{animation:shake .4s ease}
+.fb.show{animation:rise .3s both}
+.stars{animation:starPop .7s cubic-bezier(.2,.8,.2,1) both}
+.ni.on span:first-child{animation:navPop .4s ease}
+.pb i{background:linear-gradient(90deg,var(--g),#34d399);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.opt,.btn,.btn2,.cls,.day,.lvl,.ni,.hb,.back,.keys button{transition:transform .15s,background-color .18s,border-color .18s,box-shadow .18s,filter .18s}
+.opt:not(:disabled):active,.btn:active,.btn2:active,.lvl:active,.keys button:active,.hb:active,.back:active{transform:scale(.96)}
+.btn{background:linear-gradient(135deg,var(--g),#059669);box-shadow:0 4px 14px #10b9814d}
+.lvl:not(.lock):hover{transform:translateY(-2px)}
+.cf{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.cf i{position:absolute;font-style:normal;font-size:24px;animation:conf 1.5s cubic-bezier(.2,.7,.3,1) both}
+@media(hover:hover){.cls:hover,.day:hover{transform:translateY(-3px);box-shadow:0 10px 24px #10b98126;border-color:var(--g)}}
+/* ПК: шире, 3–4 колонки */
+@media(min-width:760px){main{width:min(100%,720px);padding:28px 20px}.grid{grid-template-columns:repeat(3,1fr)}.h2{font-size:28px}.th,.ex{font-size:16px}.opt{font-size:16px}
+ nav{left:50%;right:auto;transform:translateX(-50%);width:min(560px,100%);border:1px solid var(--line);border-bottom:0;border-radius:18px 18px 0 0}}
+@media(min-width:1100px){main{width:min(100%,880px)}.grid{grid-template-columns:repeat(4,1fr)}.qq{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.cf{display:none}}
+
+</style>
+</head>
+<body>
+<header>
+ <button class="logo" onclick="home()"><div class="li">√x</div><div><h1>Math Boost</h1><p>5–11</p></div></button>
+ <div class="hr">
+  <span class="pill" id="pill"></span>
+  <select id="hl" onchange="setLang(this.value)"><option value="ru">RU</option><option value="kk">ҚАЗ</option><option value="en">EN</option></select>
+  <button class="hb" id="tb" onclick="toggleTheme()"></button>
+  <button class="hb" onclick="go('settings')">⚙</button>
+ </div>
+</header>
+<main>
+ <section id="p-classes"><h2 class="h2" data-i="choose"></h2><p class="sub" data-i="sub"></p><div class="grid" id="cg"></div></section>
+ <section id="p-days" class="hide"><button class="back" data-i="all" onclick="go('classes')"></button><h2 class="h2" id="ct"></h2><p class="sub" data-i="week"></p><div id="dl"></div></section>
+ <section id="p-lesson" class="hide">
+  <button class="back" data-i="back" onclick="days()"></button>
+  <article class="panel">
+   <div class="lh"><span class="subj" data-i="subj"></span><span class="dl" id="ld"></span></div>
+   <h2 class="lt" id="lt"></h2><div class="th" id="th"></div><div class="ex" id="ex"></div>
+  </article>
+  <article class="panel" id="quiz">
+   <div class="qh"><span id="qn"></span><span id="qx"></span></div><div class="pb"><i id="bar"></i></div>
+   <p class="qq" id="qq"></p><div id="qo"></div><div class="fb" id="fb"></div>
+   <button class="btn hide" id="nx" onclick="nextQ()"></button>
+  </article>
+  <article class="panel res hide" id="res"></article>
+ </section>
+ <section id="p-extra" class="hide">
+  <h2 class="h2" data-i="xT"></h2><p class="sub" id="xd"></p>
+  <div class="panel" id="xi"><p class="th" style="border:0;padding:0" data-i="xe"></p><button class="btn" data-i="xs" onclick="startX()"></button></div>
+  <article class="panel hide" id="xq"><div class="qh"><span id="xn"></span><span id="xt"></span></div><div class="pb"><i id="xbar"></i></div><p class="qq" id="xqq"></p><div id="xqo"></div><div class="fb" id="xfb"></div><button class="btn hide" id="xnx" onclick="nextX()"></button></article>
+  <article class="panel res hide" id="xr"></article>
+ </section>
+ <section id="p-solver" class="hide">
+  <h2 class="h2" data-i="calcT"></h2><p class="sub" data-i="calcS"></p>
+  <div class="panel">
+   <input id="ci" class="inp disp" inputmode="none" autocomplete="off" oninput="preview()" onkeydown="if(event.key==='Enter'){event.preventDefault();press('=')}">
+   <div class="prev" id="cp"></div>
+   <div class="keys" id="keys"></div>
+  </div>
+  <div class="panel hide" id="hp"><div class="lh"><b data-i="hist"></b><button class="back" style="margin:0;padding:6px 10px" data-i="clr" onclick="hist=[];renderHist()"></button></div><div id="hl2"></div></div>
+ </section>
+ <section id="p-awards" class="hide">
+  <h2 class="h2" data-i="awT"></h2><p class="sub" data-i="awS"></p>
+  <div class="panel"><div class="lvc"><div class="big" id="rk"></div><div style="flex:1"><b id="lv"></b><div class="s2" id="xpt"></div><div class="pb"><i id="xpb"></i></div></div></div></div>
+  <div class="sg">
+   <div class="stat"><strong id="s1"></strong><span data-i="done2"></span></div>
+   <div class="stat"><strong id="s2"></strong><span data-i="prog"></span></div>
+   <div class="stat"><strong id="s3"></strong><span data-i="streak"></span></div>
+   <div class="stat"><strong id="s4"></strong><span data-i="stars"></span></div>
+  </div>
+  <div class="panel"><h3 style="margin-bottom:12px" data-i="badges"></h3><div class="bg3" id="bgs"></div></div>
+  <button class="btn2" data-i="reset" onclick="resetAll()"></button>
+ </section>
+ <section id="p-settings" class="hide">
+  <h2 class="h2" data-i="setT"></h2><p class="sub" data-i="setS"></p>
+  <div class="panel">
+   <label data-i="gl"></label>
+   <select id="sg" class="inp" onchange="setGrade(this.value)"><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option></select>
+   <label data-i="lang"></label>
+   <select id="sl" class="inp" onchange="setLang(this.value)"><option value="ru">Русский</option><option value="kk">Қазақша</option><option value="en">English</option></select>
+   <label data-i="pace"></label>
+   <select id="sp" class="inp" onchange="setPace(this.value)"><option value="86400000" data-i="p1"></option><option value="43200000" data-i="p2"></option><option value="0" data-i="p3"></option></select>
+   <label data-i="theme"></label>
+   <select id="st" class="inp" onchange="setTheme(this.value)"><option value="auto" data-i="ta"></option><option value="light" data-i="tl"></option><option value="dark" data-i="td2"></option></select>
+  </div>
+  <div class="panel"><p id="ps" class="th" style="border:0;padding:0"></p></div>
+  <p class="empty" data-i="note"></p>
+  <button class="btn2" data-i="reset" onclick="resetAll()"></button>
+ </section>
+</main>
+<nav>
+ <button class="ni on" data-p="classes" onclick="home()"><span>▦</span><span data-i="n1"></span></button>
+ <button class="ni" data-p="extra" onclick="S.grade?go('extra'):go('classes')"><span>🎲</span><span data-i="n4"></span></button>
+ <button class="ni" data-p="solver" onclick="go('solver')"><span>＋</span><span data-i="n2"></span></button>
+ <button class="ni" data-p="awards" onclick="go('awards')"><span>★</span><span data-i="n3"></span></button>
+</nav>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s),r=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[r(0,a.length-1)];
+const sh=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=r(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+let lang="ru";const L=(a,k,e)=>lang==="en"?e:lang==="kk"?k:a;
+
+/* ===== Генераторы заданий: Q(вопрос, ответ, неверные варианты) ===== */
+const Q=(q,a,w=[])=>{a=String(a);let o=[a];for(const x of w.map(String))if(!o.includes(x)&&o.length<4)o.push(x);const n=+a;
+ for(let k=1;o.length<4&&isFinite(n);k++){const x=String(+(n+(k%2?k:-k)).toFixed(2));if(!o.includes(x))o.push(x)}
+ o=sh(o);return{q,o,a:o.indexOf(a)}};
+const fx=a=>a?`(x ${a>0?"−":"+"} ${Math.abs(a)})`:"x";
+const sg=n=>n<0?"−":"+";
+const TR=[[0,"0","1"],[30,"1/2","√3/2"],[45,"√2/2","√2/2"],[60,"√3/2","1/2"],[90,"1","0"]];
+const RAD=[[30,"π/6"],[45,"π/4"],[60,"π/3"],[90,"π/2"],[120,"2π/3"],[135,"3π/4"],[150,"5π/6"],[180,"π"],[270,"3π/2"],[360,"2π"]];
+const TRI=[[3,4,5],[5,12,13],[8,15,17],[7,24,25],[20,21,29]];
+const pw=(c,k)=>k===1?`${c}x`:`${c}x^${k}`;
+/* s = сложность 1..10 (номер урока в дне) */
+const TOP={
+5:[
+["Обыкновенные дроби","Дроби с одинаковым знаменателем складывают по числителям: a/c + b/c = (a+b)/c.",s=>{const d=r(4,6+s),a=r(1,d-3),b=r(1,d-1-a);return Q(`${a}/${d} + ${b}/${d}`,`${a+b}/${d}`,[`${a+b}/${d+d}`,`${a*b}/${d}`,`${a+b+1}/${d}`,`${a+b-1}/${d}`,`${a+b}/${d+1}`])}],
+["Десятичные дроби","Десятичные дроби складывают и вычитают «в столбик», выравнивая запятые.",s=>{const x=r(11,99+s*10)/10,y=r(11,99)/10,m=r(0,1),v=m?x+y:Math.abs(x-y);return Q(`${m?x:Math.max(x,y)} ${m?"+":"−"} ${m?y:Math.min(x,y)}`,+v.toFixed(1),[+(v+.1).toFixed(1),+(v-.1).toFixed(1),+(v+1).toFixed(1)])}],
+["Площадь и периметр","Площадь прямоугольника S = a·b, периметр P = 2(a+b).",s=>{const a=r(2,5+s),b=r(2,5+s),p=r(0,1);return Q(`${L("Прямоугольник","Тіктөртбұрыш","Rectangle")} ${a}×${b}: ${p?L("периметр","периметр","perimeter"):L("площадь","аудан","area")}`,p?2*(a+b):a*b,[p?a*b:2*(a+b),a+b,a*b+a])}],
+["Проценты","1% — это одна сотая часть числа. p% от N = N·p/100.",s=>{const p=pick([5,10,20,25,50]),N=r(2,20+s)*20;return Q(`${L(p+"% от "+N,N+" санының "+p+"%",p+"% of "+N)}`,N*p/100,[N*p/10,N/p,N-N*p/100])}],
+["Порядок действий","Сначала скобки, затем умножение и деление, потом сложение и вычитание.",s=>{const a=r(2,20),b=r(2,9),c=r(2,9),d=r(1,10);return Q(`${a} + ${b} × ${c} − ${d}`,a+b*c-d,[(a+b)*c-d,a+b*(c-d),a+b*c+d])}]],
+6:[
+["Отрицательные числа","Складывая числа с разными знаками, из большего модуля вычитают меньший и берут знак большего.",s=>{const x=r(-15-s,-1),y=r(1,15+s);return Q(`${x} + ${y}`,x+y,[-(x+y),x-y,Math.abs(x)+y])}],
+["Модуль числа","Модуль — расстояние от нуля, он не бывает отрицательным: |−5| = 5.",s=>{const a=r(-20-s,-1),b=r(-20,20);return Q(`|${a}| + |${b}|`,-a+Math.abs(b),[a+b,-a-Math.abs(b),Math.abs(-a-Math.abs(b))+1])}],
+["Пропорции","В пропорции a/b = c/d произведение крайних членов равно произведению средних.",s=>{const a=r(2,9),c=r(2,9),k=r(2,5+s);return Q(`x/${a} = ${c*k}/${c}`,a*k,[a*c*k,k,c*k-a])}],
+["НОД и НОК","НОД — наибольший общий делитель, НОК — наименьшее общее кратное. НОК = a·b / НОД.",s=>{const g=r(2,9),a=g*r(2,6+s),b=g*r(2,6+s),d=gcd(a,b),l=a*b/d;return r(0,1)?Q(`${L("НОД","ЕҮОБ","GCD")}(${a}; ${b})`,d,[l,Math.abs(a-b)||1,d+1]):Q(`${L("НОК","ЕОК","LCM")}(${a}; ${b})`,l,[d,a*b,l+d])}],
+["Линейные уравнения","Перенеси слагаемые и раздели обе части на коэффициент при x.",s=>{const x=r(-9-s,9+s),a=r(2,9),b=r(1,20);return Q(`${a}x + ${b} = ${a*x+b}`,x,[x+1,-x,x-1])}]],
+7:[
+["Свойства степеней","При умножении степеней с одинаковым основанием показатели складываются: xᵃ·xᵇ = xᵃ⁺ᵇ.",s=>{const a=r(2,5+s),b=r(2,5+s);return Q(`x^${a} · x^${b}`,`x^${a+b}`,[`x^${a*b}`,`x^${a+b+1}`,`x^${a+b-1}`,`x^${a+b+2}`])}],
+["Смежные углы","Сумма смежных углов равна 180°.",s=>{const a=r(10,170);return Q(`${L("Смежные углы","Іргелес бұрыштар","Adjacent angles")}: ${a}° → ?`,180-a,[a,360-a,180-a+10])}],
+["Квадрат суммы и разности","(a ± b)² = a² ± 2ab + b².",s=>{const k=r(2,9),m=r(0,1)?"+":"−";return Q(`(x ${m} ${k})²`,`x²${m}${2*k}x+${k*k}`,[`x²+${k*k}`,`x²${m}${k}x+${k*k}`,`x²${m}${2*k}x+${k*k+1}`])}],
+["Сумма углов треугольника","Сумма углов треугольника равна 180°.",s=>{const a=r(30,80),b=r(30,80);return Q(`${a}° + ${b}° + ?  = 180°`,180-a-b,[a+b,360-a-b,180-a])}],
+["Линейные уравнения","Если ax − b = 0, то x = b/a.",s=>{const a=r(2,9),x=r(1,10+s),b=a*x;return Q(`${a}x − ${b} = 0`,x,[-x,b,x+1])}]],
+8:[
+["Квадратные корни","√a — неотрицательное число, квадрат которого равен a.",s=>{const m=r(2,9+s),n=r(2,m);return Q(`√${m*m} − √${n*n}`,m-n,[m+n,m-n+1,m*m-n*n])}],
+["Теорема Пифагора","В прямоугольном треугольнике c² = a² + b², где c — гипотенуза.",s=>{const t=pick(TRI),k=r(1,3),[a,b,c]=t.map(v=>v*k);return r(0,1)?Q(`a=${a}, b=${b} → c`,c,[a+b,c+1,a*b]):Q(`c=${c}, a=${a} → b`,b,[c-a,b+1,c+a])}],
+["Дискриминант","Для x² + bx + c = 0: D = b² − 4c. D>0 — два корня, D=0 — один, D<0 — нет.",s=>{const p=r(-5,6),q=r(-5,6),b=-(p+q),c=p*q,D=b*b-4*c;return Q(`D: x² ${sg(b)} ${Math.abs(b)}x ${sg(c)} ${Math.abs(c)} = 0`,D,[b*b+4*c,b*b-c,D+2])}],
+["Площадь фигур","Параллелограмм: S = a·h. Треугольник: S = a·h/2.",s=>{const a=r(3,15+s),h=2*r(1,6);return r(0,1)?Q(`${L("Параллелограмм","Параллелограмм","Parallelogram")}: a=${a}, h=${h}`,a*h,[a*h/2,a+h,2*(a+h)]):Q(`${L("Треугольник","Үшбұрыш","Triangle")}: a=${a}, h=${h}`,a*h/2,[a*h,a+h,a*h/2+a])}],
+["Теорема Виета","Для x² + px + q = 0: x₁+x₂ = −p, x₁·x₂ = q.",s=>{const p=r(1,9),q=r(1,9),S=p+q,P=p*q;return r(0,1)?Q(`x² − ${S}x + ${P} = 0: ${L("произведение корней","түбірлер көбейтіндісі","product of roots")}`,P,[S,-P,-S]):Q(`x² − ${S}x + ${P} = 0: ${L("сумма корней","түбірлер қосындысы","sum of roots")}`,S,[P,-S,S+1])}]],
+9:[
+["Арифметическая прогрессия","aₙ = a₁ + (n − 1)d, где d — разность.",s=>{const a=r(-5,10),d=r(2,7),n=r(5,10+s);return Q(`a₁=${a}, d=${d}: a${n}`,a+(n-1)*d,[a+n*d,a+(n-2)*d,a*d*n])}],
+["Синус и косинус","Значения для 0°, 30°, 45°, 60°, 90° нужно знать наизусть.",s=>{const t=pick(TR),c=r(0,1),a=t[1+c],all=["0","1/2","√2/2","√3/2","1"];return Q(`${c?"cos":"sin"} ${t[0]}°`,a,sh(all.filter(x=>x!==a)).slice(0,3))}],
+["Геометрическая прогрессия","bₙ = b₁ · qⁿ⁻¹, где q — знаменатель.",s=>{const b=r(1,5),q=r(2,3),n=r(3,6);return Q(`b₁=${b}, q=${q}: b${n}`,b*q**(n-1),[b*q**n,b*q*(n-1),b+(n-1)*q])}],
+["Площадь круга","S = πR², длина окружности C = 2πR.",s=>{const R=r(3,12);return r(0,1)?Q(`R = ${R}: S`,`${R*R}π`,[`${2*R}π`,`${R}π`,`${R*R+R}π`]):Q(`R = ${R}: C`,`${2*R}π`,[`${R*R}π`,`${R}π`,`${3*R+2}π`])}],
+["Метод интервалов","Найди нули множителей, отметь их на прямой и проверь знаки на промежутках.",s=>{const a=r(-5,3),b=a+r(2,6),m=r(0,1),mid=`(${a}; ${b})`,out=`(−∞; ${a}) ∪ (${b}; +∞)`;return Q(`${fx(a)}${fx(b)} ${m?">":"<"} 0`,m?out:mid,[m?mid:out,`(${-b}; ${-a})`,`(${a}; +∞)`,`(−∞; ${b})`])}]],
+10:[
+["Радианы","180° = π радиан. Чтобы перевести градусы в радианы, умножь на π/180.",s=>{const t=pick(RAD);return Q(`${t[0]}° → ${L("рад","рад","rad")}`,t[1],sh(RAD.filter(x=>x[1]!==t[1])).slice(0,3).map(x=>x[1]))}],
+["Стереометрия: куб","Куб со стороной a: объём V = a³, площадь поверхности S = 6a².",s=>{const a=r(2,9+s);return r(0,1)?Q(`${L("Куб","Куб","Cube")} a = ${a}: V`,a**3,[3*a,a*a,6*a*a]):Q(`${L("Куб","Куб","Cube")} a = ${a}: S`,6*a*a,[a**3,4*a*a,12*a])}],
+["Основное тригонометрическое тождество","sin²x + cos²x = 1.",s=>{const q=r(3,10),p=r(1,q-1);return Q(`sin²x = ${p}/${q} → cos²x`,`${q-p}/${q}`,[`${p}/${q}`,`${q-p}/${p}`,`${q+p}/${q}`,`${q-p}/${q+1}`,`${p+1}/${q+2}`])}],
+["Объём параллелепипеда","V = a·b·c.",s=>{const a=r(2,9),b=r(2,9),c=r(2,9);return Q(`${a} × ${b} × ${c}`,a*b*c,[a+b+c,2*(a*b+b*c+a*c),a*b+c])}],
+["Показательные уравнения","Приведи обе части к одному основанию: aˣ = aⁿ ⇒ x = n.",s=>{const b=pick([2,3,5]),n=r(2,5+(s>5?1:0));return Q(`${b}^x = ${b**n}`,n,[n+1,n-1,b*n])}]],
+11:[
+["Производная","(c·xⁿ)′ = c·n·xⁿ⁻¹.",s=>{const a=r(1,6),n=r(2,6);return Q(`(${a>1?a:""}x^${n})′`,pw(a*n,n-1),[pw(a*n,n),pw(a,n-1),pw(a*(n-1),n-1),pw(a*n+1,n-1)])}],
+["Объём цилиндра","V = πR²h.",s=>{const R=r(3,8),h=r(2,9);return Q(`R = ${R}, h = ${h}: V`,`${R*R*h}π`,[`${2*R*h}π`,`${R*h}π`,`${2*R*R*h}π`])}],
+["Первообразная и интеграл","∫ xⁿ dx = xⁿ⁺¹/(n+1) + C.",s=>{const k=r(1,6+s);return Q(`∫ ${2*k}x dx`,`${k>1?k:""}x²+C`,[`${2*k}x²+C`,`${k}x+C`,`${2*k}x+C`])}],
+["Скалярное произведение векторов","a(x₁; y₁) · b(x₂; y₂) = x₁x₂ + y₁y₂. Для перпендикулярных векторов оно равно 0.",s=>{const a=r(-5,5),b=r(-5,5),c=r(-5,5),d=r(-5,5);return Q(`a(${a}; ${b}) · b(${c}; ${d})`,a*c+b*d,[a*d+b*c,a+b+c+d,a*c-b*d])}],
+["Логарифмы","logₐb — показатель степени, в которую нужно возвести a, чтобы получить b.",s=>{const b=pick([2,3,5,10]),n=r(1,4);return r(0,1)?Q(`log_${b} ${b**n}`,n,[n+1,n-1,b*n]):Q(`log_${b} x = ${n}: x`,b**n,[b*n,n**b,b**n+b])}]]
+};
+
+/* ===== Переводы интерфейса ===== */
+const I={
+ru:{choose:"В каком ты классе?",sub:"Уроки будут по твоему классу, а в доп. заданиях — вопросы с 5 класса по твой",all:"← Сменить класс",cls:"класс",week:"Тема дня и 10 уровней сложности",back:"← К урокам",subj:"Математика",ex:"Пример",q:"Вопрос",ok:"Верно! ",no:"Не то. Попробуй ещё.",nx:"Дальше →",fin:"Завершить",done:"Урок пройден!",nl:"Следующий урок →",td:"К урокам",again:"Ещё раз",lesson:"Урок",lessons:"уроков",calcT:"Калькулятор",calcS:"Скобки, степень ^, корень √, проценты %, число π",hist:"История",clr:"Очистить",ph:"Например: (12 + 8) / 4",awT:"Награды",awS:"Уровень, серия и значки",lvl:"Уровень",done2:"Пройдено уроков",prog:"Общий прогресс",streak:"Серия, дней",stars:"Звёзд",badges:"Значки",reset:"Сбросить прогресс",conf:"Точно сбросить весь прогресс?",setT:"Настройки",setS:"Настрой сайт под себя",lang:"Язык",pace:"Темп обучения",p1:"10 новых уроков в день",p2:"10 новых уроков каждые 12 часов",p3:"Без ограничений",theme:"Оформление",ta:"Как в системе",tl:"Светлая",td2:"Тёмная",lock:"Лимит исчерпан. Новые уроки откроются через {h} ч {m} мин.",avail:"Новых уроков доступно: {n}",unl:"Без ограничений.",note:"Пройденные уроки можно повторять всегда. Лимит касается только новых.",nb:"Новый значок: ",n1:"Уроки",n2:"Калькулятор",n3:"Награды",n4:"Практика",bad:"Не удалось вычислить",xT:"Доп. задания",xd:"Случайные вопросы из классов: {g}",xe:"Раунд из 10 вопросов вперемешку: каждый вопрос из случайного класса и темы. За верный ответ с первой попытки — 3 XP.",xs:"Начать раунд",gl:"Мой класс",de:"Реши {n} доп. заданий верно",dl:"Пройди {n} уроков",ds:"Занимайся {n} дн. подряд",dp:"3 звезды в {n} уроках",dx:"Набери {n} XP",gain:"+{n} XP",D:["Понедельник","Вторник","Среда","Четверг","Пятница"]},
+kk:{choose:"Сен нешінші сыныптасың?",sub:"Сабақтар сенің сыныбың бойынша, ал қосымша тапсырмада 5-сыныптан өзіңнің сыныбыңа дейін",all:"← Сыныпты ауыстыру",cls:"сынып",week:"Күн тақырыбы және 10 деңгей",back:"← Сабақтарға",subj:"Математика",ex:"Мысал",q:"Сұрақ",ok:"Дұрыс! ",no:"Қате. Қайтадан көр.",nx:"Әрі қарай →",fin:"Аяқтау",done:"Сабақ өтілді!",nl:"Келесі сабақ →",td:"Сабақтарға",again:"Қайта",lesson:"Сабақ",lessons:"сабақ",calcT:"Калькулятор",calcS:"Жақша, дәреже ^, түбір √, пайыз %, π саны",hist:"Тарих",clr:"Тазалау",ph:"Мысалы: (12 + 8) / 4",awT:"Марапаттар",awS:"Деңгей, серия және белгілер",lvl:"Деңгей",done2:"Өтілген сабақ",prog:"Жалпы үлгерім",streak:"Серия, күн",stars:"Жұлдыз",badges:"Белгілер",reset:"Үлгерімді өшіру",conf:"Барлық үлгерімді өшіресің бе?",setT:"Баптаулар",setS:"Сайтты өзіңе бапта",lang:"Тіл",pace:"Оқу қарқыны",p1:"Күніне 10 жаңа сабақ",p2:"Әр 12 сағатта 10 жаңа сабақ",p3:"Шектеусіз",theme:"Безендіру",ta:"Жүйедегідей",tl:"Ашық",td2:"Қараңғы",lock:"Лимит бітті. Жаңа сабақтар {h} сағ {m} мин кейін ашылады.",avail:"Қолжетімді жаңа сабақ: {n}",unl:"Шектеусіз.",note:"Өтілген сабақтарды әрдайым қайталауға болады. Лимит тек жаңа сабаққа қатысты.",nb:"Жаңа белгі: ",n1:"Сабақтар",n2:"Калькулятор",n3:"Марапаттар",n4:"Жаттығу",bad:"Есептеу мүмкін болмады",xT:"Қосымша тапсырмалар",xd:"Кездейсоқ сұрақтар, сыныптар: {g}",xe:"10 сұрақтан тұратын раунд: әр сұрақ кездейсоқ сынып пен тақырыптан. Бірінші талпыныста дұрыс жауап — 3 XP.",xs:"Раундты бастау",gl:"Менің сыныбым",de:"{n} қосымша тапсырманы дұрыс орында",dl:"{n} сабақтан өт",ds:"{n} күн қатарынан оқы",dp:"{n} сабақта 3 жұлдыз",dx:"{n} XP жина",gain:"+{n} XP",D:["Дүйсенбі","Сейсенбі","Сәрсенбі","Бейсенбі","Жұма"]},
+en:{choose:"What grade are you in?",sub:"Lessons follow your grade; extra practice covers grade 5 up to yours",all:"← Change grade",cls:"grade",week:"Topic of the day and 10 difficulty levels",back:"← Back to lessons",subj:"Mathematics",ex:"Example",q:"Question",ok:"Correct! ",no:"Not quite. Try again.",nx:"Next →",fin:"Finish",done:"Lesson complete!",nl:"Next lesson →",td:"Back to lessons",again:"Try again",lesson:"Lesson",lessons:"lessons",calcT:"Calculator",calcS:"Parentheses, power ^, root √, percent %, π",hist:"History",clr:"Clear",ph:"Example: (12 + 8) / 4",awT:"Awards",awS:"Level, streak and badges",lvl:"Level",done2:"Lessons completed",prog:"Overall progress",streak:"Day streak",stars:"Stars",badges:"Badges",reset:"Reset progress",conf:"Reset all progress?",setT:"Settings",setS:"Customize your experience",lang:"Language",pace:"Learning pace",p1:"10 new lessons per day",p2:"10 new lessons every 12 hours",p3:"No limits",theme:"Appearance",ta:"System default",tl:"Light",td2:"Dark",lock:"Limit reached. New lessons unlock in {h} h {m} min.",avail:"New lessons available: {n}",unl:"No limits.",note:"Completed lessons can always be replayed. The limit only applies to new ones.",nb:"New badge: ",n1:"Lessons",n2:"Calculator",n3:"Awards",n4:"Practice",bad:"Could not calculate",xT:"Extra practice",xd:"Random questions from grades: {g}",xe:"A round of 10 mixed questions: each from a random grade and topic. A correct first try earns 3 XP.",xs:"Start round",gl:"My grade",de:"Solve {n} extra questions correctly",dl:"Complete {n} lessons",ds:"Study {n} days in a row",dp:"3 stars in {n} lessons",dx:"Earn {n} XP",gain:"+{n} XP",D:["Monday","Tuesday","Wednesday","Thursday","Friday"]}};
+const t=(k,o={})=>(I[lang][k]??I.ru[k]).replace?.(/\{(\w+)\}/g,(_,x)=>o[x])??I[lang][k];
+
+
+/* ===== Новые темы (по 2 на класс) и переводы ===== */
+const NT=7,fr=(a,b)=>{const g=gcd(a,b);return `${a/g}/${b/g}`},ft=m=>m<2?1:m*ft(m-1);
+TOP[5].push(
+["Деление с остатком","a = b·q + r, остаток r всегда меньше делителя b.",s=>{const b=r(3,9),q=r(2,9+s),m=r(0,b-1);return Q(`${b*q+m} ÷ ${b}: ${L("остаток","қалдық","remainder")}`,m,[m+1,q,b])}],
+["Единицы измерения","1 км = 1000 м, 1 м = 100 см, 1 кг = 1000 г.",s=>{const v=r(2,9+s),k=r(0,2),f=[1000,100,1000][k],U=[[L("км","км","km"),L("м","м","m")],[L("м","м","m"),L("см","см","cm")],[L("кг","кг","kg"),L("г","г","g")]][k];return Q(`${v} ${U[0]} = ? ${U[1]}`,v*f,[v*f*10,v*f/10,v*f+v])}]);
+TOP[6].push(
+["Среднее арифметическое","Среднее = сумма чисел ÷ их количество.",s=>{const a=r(2,20+s),b=r(2,20),c=r(2,20);let d=r(2,20);d+=(4-(a+b+c+d)%4)%4;const m=(a+b+c+d)/4;return Q(`${L("Среднее","Орташа","Mean")}(${a}; ${b}; ${c}; ${d})`,m,[m+1,m-1,a+b+c+d])}],
+["Умножение дробей","Числитель умножают на числитель, знаменатель на знаменатель, затем сокращают.",s=>{const a=r(1,4),b=r(a+1,7),c=r(1,4),d=r(c+1,7+(s>5?2:0));return Q(`${a}/${b} × ${c}/${d}`,fr(a*c,b*d),[fr(a+c,b+d),`${a*c}/${b+d}`,fr(a*d,b*c),`${a*c+1}/${b*d}`])}]);
+TOP[7].push(
+["Разность квадратов","(a − b)(a + b) = a² − b².",s=>{const k=r(2,9+(s>5?3:0));return Q(`(x − ${k})(x + ${k})`,`x²−${k*k}`,[`x²+${k*k}`,`x²−${2*k}x`,`x²−${k}`,`x²−${k*k+1}`])}],
+["Одночлены","Коэффициенты перемножают, показатели степеней с одним основанием складывают.",s=>{const a=r(2,5+s),b=r(2,9),m=r(2,4),n=r(2,4);return Q(`${a}x^${m} · ${b}x^${n}`,`${a*b}x^${m+n}`,[`${a+b}x^${m+n}`,`${a*b}x^${m*n}`,`${a*b}x^${m+n+1}`,`${a*b+1}x^${m+n}`,`${a*b}x^${m+n-1}`])}]);
+TOP[8].push(
+["Неравенства","Обе части делят на коэффициент; при делении на отрицательное число знак неравенства меняется.",s=>{const a=r(2,9),k=r(1,9+s),n=s>5;return Q(`${n?"−":""}${a}x > ${a*k}`,n?`x < ${-k}`:`x > ${k}`,[n?`x > ${-k}`:`x < ${k}`,`x > ${a*k}`,n?`x < ${k}`:`x > ${-k}`])}],
+["Площадь трапеции","S = (a + b)·h / 2.",s=>{const a=r(2,9+s),b=r(2,9+s),h=2*r(1,6);return Q(`${L("Трапеция","Трапеция","Trapezoid")}: a=${a}, b=${b}, h=${h}`,(a+b)*h/2,[a*b,(a+b)*h,a+b+h])}]);
+TOP[9].push(
+["Комбинаторика","n! = 1·2·…·n — число перестановок. C(n;2) = n(n−1)/2 — число пар.",s=>{const n=r(3,6+(s>5?1:0));return r(0,1)?Q(`${n}!`,ft(n),[ft(n)+n,n*n,ft(n-1)*2,ft(n)-n]):Q(`C(${n}; 2)`,n*(n-1)/2,[n*(n-1),n*n,n+n-1])}],
+["Вероятность","P = число благоприятных исходов / число всех исходов.",s=>{const w=r(1,8),b=r(1,8);return Q(`${L("Белых","Ақ","White")}: ${w}, ${L("чёрных","қара","black")}: ${b}. P(${L("белый","ақ","white")})`,fr(w,w+b),[fr(b,w+b),fr(w,b),fr(w+b,w),`${w}/${w+b+1}`])}]);
+TOP[10].push(
+["Корень n-й степени","ⁿ√a — число, n-я степень которого равна a: ∛8 = 2.",s=>{const k=r(2,5);return r(0,1)?Q(`⁴√${k**4}`,k,[k+1,k*2,k*k]):Q(`∛${k**3}`,k,[k+1,k*3,k*k])}],
+["Объём шара","V = 4/3·πR³.",s=>{const R=3*r(1,3);return Q(`R = ${R}: V`,`${4*R**3/3}π`,[`${R**3}π`,`${4*R*R+R}π`,`${2*R**3/3}π`,`${4*R**3/3+R}π`])}]);
+TOP[11].push(
+["Предел","Если подстановка даёт 0/0, разложи числитель на множители и сократи дробь.",s=>{const k=r(1,9+s);return Q(`lim x→${k} (x²−${k*k})/(x−${k})`,2*k,[k,k*k,0,2*k+1])}],
+["Объём конуса","V = ⅓·πR²h.",s=>{const R=r(2,6+(s>5?2:0)),h=3*r(1,4);return Q(`R = ${R}, h = ${h}: V`,`${R*R*h/3}π`,[`${R*R*h}π`,`${2*R*R*h/3}π`,`${R*h/3}π`])}]);
+/* [название kk, название en, теория kk, теория en]; пустая теория = формула, как в ru */
+const TT={
+5:[["Жай бөлшектер","Common fractions","Бөлімдері бірдей бөлшектерді қосқанда алымдарын қосады: a/c + b/c = (a+b)/c.","Fractions with the same denominator add by numerators: a/c + b/c = (a+b)/c."],["Ондық бөлшектер","Decimals","Ондық бөлшектерді үтірлерін тураластырып, бағанға жазып қосады және азайтады.","Add and subtract decimals in columns, lining up the decimal points."],["Аудан және периметр","Area and perimeter","Тіктөртбұрыштың ауданы S = a·b, периметрі P = 2(a+b).","Rectangle area S = a·b, perimeter P = 2(a+b)."],["Пайыздар","Percentages","1% — санның жүзден бір бөлігі. N санының p%-ы = N·p/100.","1% is one hundredth. p% of N = N·p/100."],["Амалдар реті","Order of operations","Алдымен жақша, содан кейін көбейту мен бөлу, соңында қосу мен азайту.","Brackets first, then multiplication and division, then addition and subtraction."],["Қалдықпен бөлу","Division with remainder","a = b·q + r, қалдық r бөлгіш b-дан әрқашан кіші.","a = b·q + r, the remainder r is always less than b."],["Өлшем бірліктері","Units of measure","",""]],
+6:[["Теріс сандар","Negative numbers","Таңбалары әртүрлі сандарды қосқанда үлкен модульден кішісін азайтып, үлкен модульдің таңбасын қояды.","For numbers with different signs, subtract the smaller absolute value from the larger and keep the sign of the larger."],["Санның модулі","Absolute value","Модуль — нөлден қашықтық, ол теріс болмайды: |−5| = 5.","Absolute value is the distance from zero and is never negative: |−5| = 5."],["Пропорциялар","Proportions","a/b = c/d пропорциясында шеткі мүшелердің көбейтіндісі ортаңғыларының көбейтіндісіне тең.","In a/b = c/d the product of the extremes equals the product of the means."],["ЕҮОБ және ЕОК","GCD and LCM","ЕҮОБ — ең үлкен ортақ бөлгіш, ЕОК — ең кіші ортақ еселік. ЕОК = a·b / ЕҮОБ.","GCD is the greatest common divisor, LCM the least common multiple. LCM = a·b / GCD."],["Сызықтық теңдеулер","Linear equations","Қосылғыштарды көшіріп, екі жағын x-тің коэффициентіне бөл.","Move the terms across and divide both sides by the coefficient of x."],["Орташа арифметикалық","Arithmetic mean","Орташа = сандар қосындысы ÷ олардың саны.","Mean = sum of the numbers ÷ how many there are."],["Бөлшектерді көбейту","Multiplying fractions","Алымды алымға, бөлімді бөлімге көбейтіп, соңынан қысқартады.","Multiply numerators and denominators, then simplify."]],
+7:[["Дәреже қасиеттері","Properties of powers","Негіздері бірдей дәрежелерді көбейткенде көрсеткіштері қосылады: xᵃ·xᵇ = xᵃ⁺ᵇ.","When multiplying powers with the same base, add the exponents: xᵃ·xᵇ = xᵃ⁺ᵇ."],["Іргелес бұрыштар","Adjacent angles","Іргелес бұрыштардың қосындысы 180°.","Adjacent angles add up to 180°."],["Қосындының және айырманың квадраты","Square of a sum and difference","",""],["Үшбұрыш бұрыштарының қосындысы","Angles of a triangle","Үшбұрыш бұрыштарының қосындысы 180°.","The angles of a triangle add up to 180°."],["Сызықтық теңдеулер","Linear equations","",""],["Квадраттар айырмасы","Difference of squares","",""],["Бірмүшелер","Monomials","Коэффициенттерді көбейтеді, негізі бірдей дәреже көрсеткіштерін қосады.","Multiply the coefficients and add the exponents of the same base."]],
+8:[["Квадрат түбірлер","Square roots","√a — квадраты a-ға тең теріс емес сан.","√a is the non-negative number whose square is a."],["Пифагор теоремасы","Pythagorean theorem","Тікбұрышты үшбұрышта c² = a² + b², c — гипотенуза.","In a right triangle c² = a² + b², where c is the hypotenuse."],["Дискриминант","Discriminant","x² + bx + c = 0 үшін D = b² − 4c. D>0 — екі түбір, D=0 — бір, D<0 — түбір жоқ.","For x² + bx + c = 0: D = b² − 4c. D>0 two roots, D=0 one root, D<0 none."],["Фигуралардың ауданы","Area of shapes","Параллелограмм: S = a·h. Үшбұрыш: S = a·h/2.","Parallelogram: S = a·h. Triangle: S = a·h/2."],["Виет теоремасы","Vieta's theorem","x² + px + q = 0 үшін: x₁+x₂ = −p, x₁·x₂ = q.","For x² + px + q = 0: x₁+x₂ = −p, x₁·x₂ = q."],["Теңсіздіктер","Inequalities","Екі жағын коэффициентке бөледі; теріс санға бөлгенде теңсіздік таңбасы өзгереді.","Divide both sides by the coefficient; dividing by a negative number flips the sign."],["Трапеция ауданы","Area of a trapezoid","",""]],
+9:[["Арифметикалық прогрессия","Arithmetic progression","aₙ = a₁ + (n − 1)d, d — айырма.","aₙ = a₁ + (n − 1)d, where d is the common difference."],["Синус және косинус","Sine and cosine","0°, 30°, 45°, 60°, 90° мәндерін жатқа білу керек.","Learn the values for 0°, 30°, 45°, 60°, 90° by heart."],["Геометриялық прогрессия","Geometric progression","bₙ = b₁ · qⁿ⁻¹, q — еселік.","bₙ = b₁ · qⁿ⁻¹, where q is the common ratio."],["Дөңгелек ауданы","Area of a circle","S = πR², шеңбер ұзындығы C = 2πR.","S = πR², circumference C = 2πR."],["Интервалдар әдісі","Interval method","Көбейткіштердің нөлдерін тауып, түзуде белгіле де, аралықтардағы таңбаларды тексер.","Find the zeros of the factors, mark them on the line and check the sign on each interval."],["Комбинаторика","Combinatorics","n! = 1·2·…·n — алмастырулар саны. C(n;2) = n(n−1)/2 — жұптар саны.","n! = 1·2·…·n counts arrangements. C(n;2) = n(n−1)/2 counts pairs."],["Ықтималдық","Probability","P = қолайлы нәтижелер саны / барлық нәтижелер саны.","P = favorable outcomes / all outcomes."]],
+10:[["Радиан","Radians","180° = π радиан. Градусты радианға айналдыру үшін π/180-ге көбейт.","180° = π radians. To convert degrees to radians, multiply by π/180."],["Стереометрия: куб","Solid geometry: cube","Қыры a куб: көлемі V = a³, бетінің ауданы S = 6a².","Cube with edge a: volume V = a³, surface area S = 6a²."],["Негізгі тригонометриялық теңбе-теңдік","Basic trigonometric identity","",""],["Параллелепипед көлемі","Volume of a cuboid","",""],["Көрсеткіштік теңдеулер","Exponential equations","Екі жағын бір негізге келтір: aˣ = aⁿ ⇒ x = n.","Bring both sides to the same base: aˣ = aⁿ ⇒ x = n."],["n-ші дәрежелі түбір","n-th roots","ⁿ√a — n-ші дәрежесі a-ға тең сан: ∛8 = 2.","ⁿ√a is the number whose n-th power is a: ∛8 = 2."],["Шар көлемі","Volume of a sphere","",""]],
+11:[["Туынды","Derivative","",""],["Цилиндр көлемі","Volume of a cylinder","",""],["Алғашқы функция және интеграл","Antiderivative and integral","",""],["Векторлардың скаляр көбейтіндісі","Dot product of vectors","a(x₁; y₁) · b(x₂; y₂) = x₁x₂ + y₁y₂. Перпендикуляр векторлар үшін ол 0-ге тең.","a(x₁; y₁) · b(x₂; y₂) = x₁x₂ + y₁y₂. For perpendicular vectors it equals 0."],["Логарифмдер","Logarithms","logₐb — b алу үшін a-ны шығару керек дәреже көрсеткіші.","logₐb is the power to which a must be raised to get b."],["Шектер","Limits","Қойғанда 0/0 шықса, алымды көбейткіштерге жіктеп, бөлшекті қысқарт.","If substitution gives 0/0, factor the numerator and cancel."],["Конус көлемі","Volume of a cone","",""]]};
+Object.keys(TT).forEach(g=>TOP[g].forEach((f,i)=>{const x=TT[g][i];f.T=[[f[0],x[0],x[1]],[f[1],x[2],x[3]]]}));
+const li=()=>lang==="kk"?1:lang==="en"?2:0,tt=f=>f.T[0][li()]||f[0],th=f=>f.T[1][li()]||f[1];
+Object.keys(I).forEach(k=>I[k].D=[...Array(NT)].map((_,i)=>({ru:"Тема",kk:"Тақырып",en:"Topic"}[k]+" "+(i+1))));
+I.ru.week="7 тем, в каждой 10 уровней сложности";I.kk.week="7 тақырып, әрқайсысында 10 деңгей";I.en.week="7 topics, 10 difficulty levels each";
+/* конфетти и анимации */
+function confetti(){const w=document.createElement("div");w.className="cf";const E=["🎉","⭐","✨","🎊","💚"];for(let i=0;i<26;i++){const e=document.createElement("i");e.textContent=E[i%5];e.style.cssText=`left:50%;top:40%;--x:${r(-170,170)}px;--y:${r(-200,80)}px;--r:${r(-300,300)}deg;animation-delay:${r(0,150)}ms`;w.append(e)}document.body.append(w);setTimeout(()=>w.remove(),1800)}
+const _f=finish;finish=function(){_f();if(cur.mist===0)confetti()};
+const _nx=nextX;nextX=function(){_nx();if(X.i===9&&X.first>=9&&!$("#xr").classList.contains("hide"))confetti()};
+new MutationObserver(ms=>ms.forEach(m=>m.target.matches&&m.target.matches(".grid,.bg3")&&[...m.target.children].forEach((c,i)=>c.style.setProperty("--n",i)))).observe(document.querySelector("main"),{childList:true,subtree:true});
+
+/* ===== Значки: [эмодзи, ru, kk, en, тип, порог] ===== */
+const BADGES=[["🎯","Первый шаг","Алғашқы қадам","First step","l",1],["📚","Учебная неделя","Оқу аптасы","Study week","l",5],["💪","Упорство","Табандылық","Persistence","l",25],["🚀","Разгон","Серпін","Boost","l",50],["🏅","Сотня","Жүздік","Century","l",100],["👑","Мастер математики","Математика шебері","Math master","l",350],["🔥","Три дня подряд","Үш күн қатар","3-day streak","s",3],["📅","Неделя без пропусков","Үзіліссіз апта","Week streak","s",7],["⭐","Отличник","Үздік","Straight A","p",10],["💎","Перфекционист","Перфекционист","Perfectionist","p",50],["⚡","Энтузиаст","Ынталы","Enthusiast","x",500],["🧠","Эрудит","Эрудит","Scholar","x",2000],["🎲","Тренер","Жаттықтырушы","Trainer","e",50],["🏆","Практик","Практик","Practitioner","e",300]];
+
+/* ===== Состояние ===== */
+const KEY="mathBoost_v3",PER=10,TOTAL=7*NT*10;
+let S={grade:0,ex:0,done:{},xp:0,streak:0,last:"",perfect:0,lang:"ru",theme:"auto",pace:864e5,win:{start:0,count:0}};
+try{const raw=localStorage.getItem(KEY);if(raw)Object.assign(S,JSON.parse(raw));else{
+ JSON.parse(localStorage.getItem("mathBoostCompleted_v2")||"[]").forEach(k=>{if(/^\d+-\d-\d$/.test(k))S.done[k]=1});
+ S.lang=localStorage.getItem("mathBoostLanguage")||"ru";const p=localStorage.getItem("mathBoostPace_v1");if(p!==null)S.pace=+p||0;
+ S.theme=localStorage.getItem("mathBoostTheme_v1")||"auto";if(S.theme==="light")S.theme="auto"}}catch(e){}
+if(!I[S.lang])S.lang="ru";lang=S.lang;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const key=(g,d,n)=>`${g}-${d}-${n}`;
+const cnt=()=>Object.keys(S.done).length;
+const starsSum=()=>Object.values(S.done).reduce((a,b)=>a+b,0);
+const lvl=()=>Math.floor(Math.sqrt(S.xp/50))+1;
+const rank=()=>["🌱","📘","🔥","⚡","💎","👑"][Math.min(5,Math.floor(lvl()/3))];
+const used=()=>S.pace>0&&Date.now()-S.win.start<S.pace?S.win.count:0;
+const blocked=()=>S.pace>0&&used()>=PER;
+const lockMsg=()=>{const m=Math.ceil((S.win.start+S.pace-Date.now())/6e4);return t("lock",{h:Math.floor(m/60),m:m%60})};
+const val=b=>b[4]==="l"?cnt():b[4]==="s"?S.streak:b[4]==="p"?S.perfect:b[4]==="e"?S.ex:S.xp;
+const earned=()=>BADGES.map(b=>val(b)>=b[5]);
+function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("show"),2600)}
+
+/* ===== Навигация ===== */
+let page="classes",cur={g:null,d:0,n:0},open=0;
+function go(p){page=p;["classes","days","lesson","extra","solver","awards","settings"].forEach(x=>$("#p-"+x).classList.toggle("hide",x!==p));
+ document.querySelectorAll(".ni").forEach(b=>b.classList.toggle("on",b.dataset.p===(p==="days"||p==="lesson"?"classes":p)));
+ if(p==="classes")classes();if(p==="extra")extraHome();if(p==="awards")awards();if(p==="settings")settings();header();scrollTo(0,0)}
+function header(){$("#pill").textContent=`${rank()} ${lvl()} · 🔥${S.streak}`;$("#tb").textContent=document.documentElement.dataset.theme==="dark"?"☀️":"🌙"}
+const home=()=>S.grade?days():go("classes");
+function classes(){const g=$("#cg");g.innerHTML="";for(let c=5;c<=11;c++){let n=0,st=0;for(let d=0;d<NT;d++)for(let i=0;i<10;i++){const v=S.done[key(c,d,i)];if(v){n++;st+=v}}
+ const b=document.createElement("button");b.className="card cls";b.innerHTML=`<div class="badge">${c}</div><div class="cn">${c} ${t("cls")}</div><div class="s2">${n}/${NT*10} · ★ ${st}</div><div class="pb"><i style="width:${n*10/NT}%"></i></div>`;
+ b.onclick=()=>{S.grade=c;save();open=0;days()};g.append(b)}}
+function days(){const g=cur.g=S.grade;$("#ct").textContent=`${g} ${t("cls")}`;const el=$("#dl");el.innerHTML="";
+ for(let d=0;d<NT;d++){const ds=[...Array(10).keys()].map(n=>S.done[key(g,d,n)]||0),c=ds.filter(Boolean).length;
+  const b=document.createElement("button");b.className="card day";
+  b.innerHTML=`<div><div class="tag">${t("D")[d]}</div><div class="ttl">${tt(TOP[g][d])}</div><div class="s2">${c}/10 ${t("lessons")}</div></div><div class="mark ${c===10?"done":""}">${c===10?"✓":open===d?"▾":"▸"}</div>`;
+  b.onclick=()=>{open=open===d?-1:d;days()};el.append(b);
+  if(open===d){const w=document.createElement("div");w.className="lv";
+   ds.forEach((st,n)=>{const lk=!st&&blocked(),x=document.createElement("button");x.className="lvl"+(st?" done":"")+(lk?" lock":"");
+    x.innerHTML=`<b>${lk?"🔒":n+1}</b><i>${"★".repeat(st)}${"☆".repeat(3-st)}</i>`;x.onclick=()=>lesson(d,n);w.append(x)});el.append(w)}}
+ page==="days"?header():go("days")}
+
+/* ===== Урок ===== */
+function lesson(d,n){const g=cur.g,st=S.done[key(g,d,n)]||0;if(!st&&blocked()){alert(lockMsg());return}
+ Object.assign(cur,{d,n,i:0,mist:0,lock:false,bad:false});const F=TOP[g][d],gen=F[2],s=n+1;
+ const qs=[],seen=new Set();while(qs.length<5){let q,tries=0;do{q=gen(s)}while(seen.has(q.q)&&++tries<8);seen.add(q.q);qs.push(q)}cur.qs=qs;
+ const e=gen(s);
+ $("#ld").textContent=`${t("D")[d]} · ${t("lesson")} ${n+1}/10`;$("#lt").textContent=tt(F);$("#th").textContent=th(F);
+ $("#ex").innerHTML=`<b>${t("ex")}:</b> ${e.q} = <b>${e.o[e.a]}</b>`;
+ $("#quiz").classList.remove("hide");$("#res").classList.add("hide");showQ();go("lesson")}
+function showQ(){const q=cur.qs[cur.i];$("#qn").textContent=`${t("q")} ${cur.i+1}/5`;$("#qx").textContent=`✖ ${cur.mist}`;$("#bar").style.width=cur.i*20+"%";
+ $("#qq").textContent=q.q;const box=$("#qo");box.innerHTML="";
+ q.o.forEach((o,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>answer(i,b);box.append(b)});
+ $("#fb").className="fb";$("#nx").classList.add("hide");cur.lock=false}
+function answer(i,b){if(cur.lock)return;const q=cur.qs[cur.i],fb=$("#fb");
+ if(i===q.a){cur.lock=true;document.querySelectorAll("#qo .opt").forEach(x=>x.disabled=true);b.classList.add("ok");
+  fb.className="fb show ok";fb.textContent=t("ok")+q.q+" = "+q.o[q.a];$("#bar").style.width=(cur.i+1)*20+"%";
+  const nx=$("#nx");nx.textContent=cur.i<4?t("nx"):t("fin");nx.classList.remove("hide")}
+ else{b.disabled=true;b.classList.add("no");cur.mist++;$("#qx").textContent=`✖ ${cur.mist}`;fb.className="fb show no";fb.textContent=t("no")}}
+function nextQ(){if(!cur.lock)return;if(cur.i<4){cur.i++;showQ()}else finish()}
+function tick(){const today=new Date().toDateString(),y=new Date(Date.now()-864e5).toDateString();if(S.last!==today){S.streak=S.last===y?S.streak+1:1;S.last=today}}
+function badgeToasts(before){earned().forEach((v,i)=>{if(v&&!before[i])setTimeout(()=>toast(t("nb")+BADGES[i][0]+" "+BADGES[i][1+(lang==="kk"?1:lang==="en"?2:0)]),400+i*50)})}
+function finish(){const {g,d,n}=cur,k=key(g,d,n),prev=S.done[k]||0,stars=cur.mist===0?3:cur.mist<=2?2:1,before=earned();
+ let gain=0;
+ if(stars>prev){gain=(stars-prev)*15+(prev?0:10);if(!prev&&S.pace>0){const w=S.win;if(!w.start||Date.now()-w.start>=S.pace)S.win={start:Date.now(),count:0};S.win.count++}
+  S.done[k]=stars;if(stars===3)S.perfect++;S.xp+=gain}
+ tick();save();header();badgeToasts(before);
+ $("#quiz").classList.add("hide");const R=$("#res");R.classList.remove("hide");
+ R.innerHTML=`<div class="stars">${"★".repeat(stars)}${"☆".repeat(3-stars)}</div><h3>${t("done")}</h3><p class="s2">${5-Math.min(5,cur.mist)}/5 · ✖ ${cur.mist}${gain?" · "+t("gain",{n:gain}):""}</p>${n<9?`<button class="btn" onclick="lesson(${d},${n+1})">${t("nl")}</button>`:""}<button class="btn2" onclick="lesson(${d},${n})">${t("again")}</button><button class="btn2" onclick="days()">${t("td")}</button>`}
+
+/* ===== Доп. задания: вопросы с 5 класса по твой ===== */
+let X={};
+function extraHome(){const g=S.grade||5;$("#xd").textContent=t("xd",{g:g===5?"5":"5–"+g});$("#xi").classList.remove("hide");$("#xq").classList.add("hide");$("#xr").classList.add("hide")}
+function startX(){X={i:0,first:0,qs:[]};for(let i=0;i<10;i++){const g=r(5,S.grade),f=TOP[g][r(0,NT-1)],q=f[2](r(1,10));q.tag=`${g} ${t("cls")} · ${tt(f)}`;X.qs.push(q)}
+ $("#xi").classList.add("hide");$("#xr").classList.add("hide");$("#xq").classList.remove("hide");showX()}
+function showX(){const q=X.qs[X.i];X.bad=false;X.lock=false;$("#xn").textContent=`${t("q")} ${X.i+1}/10`;$("#xt").textContent=q.tag;$("#xbar").style.width=X.i*10+"%";$("#xqq").textContent=q.q;
+ const box=$("#xqo");box.innerHTML="";q.o.forEach((o,i)=>{const b=document.createElement("button");b.className="opt";b.textContent=o;b.onclick=()=>ansX(i,b);box.append(b)});
+ $("#xfb").className="fb";$("#xnx").classList.add("hide")}
+function ansX(i,b){if(X.lock)return;const q=X.qs[X.i],fb=$("#xfb");
+ if(i===q.a){X.lock=true;if(!X.bad)X.first++;document.querySelectorAll("#xqo .opt").forEach(x=>x.disabled=true);b.classList.add("ok");fb.className="fb show ok";fb.textContent=t("ok")+q.q+" = "+q.o[q.a];
+  $("#xbar").style.width=(X.i+1)*10+"%";const n=$("#xnx");n.textContent=X.i<9?t("nx"):t("fin");n.classList.remove("hide")}
+ else{X.bad=true;b.disabled=true;b.classList.add("no");fb.className="fb show no";fb.textContent=t("no")}}
+function nextX(){if(!X.lock)return;if(X.i<9){X.i++;showX()}else{const before=earned(),gain=X.first*3;S.xp+=gain;S.ex+=X.first;tick();save();header();badgeToasts(before);
+ $("#xq").classList.add("hide");const R=$("#xr");R.classList.remove("hide");
+ R.innerHTML=`<div class="stars">${X.first>=9?"★★★":X.first>=6?"★★☆":"★☆☆"}</div><h3>${X.first}/10</h3><p class="s2">${t("gain",{n:gain})}</p><button class="btn" onclick="startX()">${t("again")}</button><button class="btn2" onclick="home()">${t("td")}</button>`}}
+
+/* ===== Награды ===== */
+function awards(){const l=lvl(),lo=50*(l-1)**2,hi=50*l*l;$("#rk").textContent=rank();$("#lv").textContent=`${t("lvl")} ${l}`;
+ $("#xpt").textContent=`${S.xp} / ${hi} XP`;$("#xpb").style.width=(S.xp-lo)/(hi-lo)*100+"%";
+ $("#s1").textContent=cnt();$("#s2").textContent=Math.round(cnt()/TOTAL*100)+"%";$("#s3").textContent=S.streak;$("#s4").textContent=starsSum()+" / "+TOTAL*3;
+ const i18=lang==="kk"?2:lang==="en"?3:1;
+ $("#bgs").innerHTML=BADGES.map(b=>{const on=val(b)>=b[5],dk={l:"dl",s:"ds",p:"dp",x:"dx",e:"de"}[b[4]];
+  return `<div class="bd ${on?"on":"off"}"><div class="e">${b[0]}</div><b>${b[i18]}</b><span>${on?"✓":Math.min(val(b),b[5])+"/"+b[5]}</span><span>${t(dk,{n:b[5]})}</span></div>`}).join("")}
+
+/* ===== Калькулятор (собственный парсер, без eval) ===== */
+let hist=[];
+function ev(src){const s=src.replace(/\s/g,"").replace(/×/g,"*").replace(/÷/g,"/").replace(/[−–]/g,"-").replace(/,/g,".");
+ const T=s.match(/\d+\.?\d*|\.\d+|[-+*\/^()%√π]/g)||[];if(!T.length||T.join("")!==s)throw 0;let i=0;
+ const pk=()=>T[i],eat=()=>T[i++],st=x=>x&&(/^[\d.]/.test(x)||"(√π".includes(x));
+ const expr=()=>{let v=term();while(pk()==="+"||pk()==="-"){const o=eat(),b=term();v=o==="+"?v+b:v-b}return v};
+ const term=()=>{let v=un();while(pk()==="*"||pk()==="/"||st(pk())){if(pk()==="*"){eat();v*=un()}else if(pk()==="/"){eat();const d=un();if(!d)throw 0;v/=d}else v*=un()}return v};
+ const un=()=>{if(pk()==="-"){eat();return -un()}if(pk()==="+"){eat();return un()}return pow()};
+ const pow=()=>{const b=post();if(pk()==="^"){eat();return b**un()}return b};
+ const post=()=>{let v=prim();while(pk()==="%"){eat();v/=100}return v};
+ const prim=()=>{const x=eat();if(x==="("){const v=expr();if(eat()!==")")throw 0;return v}if(x==="√")return Math.sqrt(post());if(x==="π")return Math.PI;if(x&&/^[\d.]/.test(x))return parseFloat(x);throw 0};
+ const v=expr();if(i<T.length||!isFinite(v))throw 0;return +v.toFixed(10)}
+const fmt=v=>v.toLocaleString(lang,{maximumFractionDigits:10,useGrouping:false});
+const KEYS=["C","⌫","(",")","√","^","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","π","0",".","="];
+function buildKeys(){$("#keys").innerHTML=KEYS.map(k=>`<button class="${"÷×−+".includes(k)?"op":k==="="?"eq":k==="C"?"cl":""}" onclick="press('${k}')">${k}</button>`).join("")}
+function press(k){const el=$("#ci");
+ if(k==="C"){el.value="";return preview()}
+ if(k==="="){try{const v=ev(el.value);hist.unshift([el.value,v]);hist=hist.slice(0,8);el.value=String(v);renderHist();$("#cp").textContent=""}catch(e){$("#cp").textContent=t("bad")}return}
+ let a=el.selectionStart??el.value.length,b=el.selectionEnd??el.value.length;
+ if(k==="⌫"){if(a===b&&a>0)a--;el.value=el.value.slice(0,a)+el.value.slice(b);el.setSelectionRange(a,a)}
+ else{el.value=el.value.slice(0,a)+k+el.value.slice(b);el.setSelectionRange(a+k.length,a+k.length)}
+ preview()}
+function preview(){const v=$("#ci").value;try{const x=ev(v);$("#cp").textContent=/[-+*\/^%√×÷−]/.test(v.replace(/^-/,""))?"= "+fmt(x):""}catch(e){$("#cp").textContent=""}}
+function renderHist(){$("#hp").classList.toggle("hide",!hist.length);$("#hl2").innerHTML=hist.map((h,i)=>`<div class="hi" onclick="$('#ci').value='${h[1]}';preview()"><span>${h[0]}</span><b>= ${fmt(h[1])}</b></div>`).join("")}
+
+/* ===== Настройки, тема, язык ===== */
+function applyTheme(){const d=S.theme==="auto"?matchMedia("(prefers-color-scheme:dark)").matches:S.theme==="dark";
+ document.documentElement.dataset.theme=d?"dark":"light";document.querySelector('meta[name=theme-color]').content=d?"#0b1220":"#10b981";header()}
+function setTheme(v){S.theme=v;save();applyTheme()}
+function toggleTheme(){setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");$("#st").value=S.theme}
+matchMedia("(prefers-color-scheme:dark)").addEventListener?.("change",()=>S.theme==="auto"&&applyTheme());
+function setPace(v){S.pace=+v;save();settings();if(page==="days")days()}
+function setGrade(v){S.grade=+v;save();open=0}
+function settings(){$("#sg").value=S.grade||"";$("#sl").value=lang;$("#sp").value=String(S.pace);$("#st").value=S.theme;
+ $("#ps").textContent=S.pace===0?t("unl"):blocked()?lockMsg():t("avail",{n:PER-used()})}
+function setLang(v){lang=S.lang=I[v]?v:"ru";save();applyLang();({classes,days,awards,settings,extra:extraHome}[page]||(()=>{}))();renderHist()}
+function applyLang(){document.documentElement.lang=lang;$("#hl").value=lang;$("#sl").value=lang;
+ document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));$("#ci").placeholder=t("ph")}
+function resetAll(){if(confirm(t("conf"))){S={...S,done:{},xp:0,ex:0,streak:0,last:"",perfect:0,win:{start:0,count:0}};save();hist=[];home()}}
+
+buildKeys();applyLang();applyTheme();home();
+</script>
+</body>
+</html>
